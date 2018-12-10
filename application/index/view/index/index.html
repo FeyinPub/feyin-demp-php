@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta charset="utf-8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta equiv="Expires" content="0">
+    <meta id="eqMobileViewport" name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <script>
+
+        (function () {
+            function setViewport(w) {
+                var scale = parseInt(window.screen.width) / w, a = /Android (\d+\.\d+)/.test(navigator.userAgent) ? 2.3 >= parseFloat(RegExp.$1) ? "width="+w+", target-densitydpi=device-dpi" : "width="+w+", minimum-scale = " + scale + ", maximum-scale = " + scale + ", target-densitydpi=device-dpi" : "width="+w+", user-scalable=no, target-densitydpi=device-dpi";
+                document.getElementById('eqMobileViewport').setAttribute("content",a);
+            }
+            function resize() {setViewport(639);setTimeout(function () {setViewport(640);},100)}
+            setViewport(640);
+            window.onorientationchange = resize;
+        })();
+
+        var sysParam = {
+            baseUrl: '',//*插件的基本资源路径
+            version: "?r",//版本
+            ajaxGetOrderDescURL:"./getOrderDesc",//获取订单详情
+            ajaxOrderListURL:"./orderList",//获取订单列表
+            ajaxfeyinURL:"./feyin",//飞印测试
+            musicUrl: "" //音频路径
+        }
+    </script>
+    <link rel="stylesheet" type="text/css" href="/static/css/common.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/animation.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/index.css">
+</head>
+<body>
+<section id="app">
+    <!--加载-->
+    <transition name="fade">
+        <section class="loading" id="loading" v-show="loading">
+            <div class="loadingBox">
+                <p><img class="" src="/static/images/logo.png"></p>
+                <span class="l-1">i</span>
+                <span class="l-2">-</span>
+                <span class="l-3">l</span>
+                <span class="l-4">z</span>
+                <span class="l-5">.</span>
+                <span class="l-6">c</span>
+                <span class="l-7">n</span>
+                <div class="loadingLine">
+                    <div></div>
+                </div>
+            </div>
+        </section>
+    </transition>
+    <section v-cloak class="body">
+        <transition-group name="fade">
+
+            <!--首页-->
+            <section class="index bg bg2" key="fade" v-show="page.index">
+                <div class="box " id="indexISC">
+                	<div>
+                		<!--  
+	                    <input class="btnStart fadeInLeft" type="datetime" name="stime" vlaue="" placeholder="开始时间" v-model="stime">
+	                    <input class="btnShare fadeInLeft" type="datetime" name="etime" value="" placeholder="结束时间" v-model="etime">
+	                    <input class="btnOrder fadeInLeft" type="text" name="orderId" value="" placeholder="订单号" v-model="orderId">
+	                    <button class="btnSend" @touchend="send">搜索</button>
+	                    -->
+	                    <input class="btnOrder fadeInLeft" type="text" name="appid" value="" placeholder="应用appid" v-model="appid">
+	                    <button class="btnFeyin" @touchend="feyin">打印测试</button>
+                	</div>
+                </div>
+            </section>
+                
+            <!--弹窗黑层-->
+            <section class="popupBg" v-show="popupBg" key="fade"></section>
+        </transition-group>
+
+        <!--游戏规则弹窗-->
+        <div class="ce rule" v-show="pop.rule">
+            <img class="title mCe" src="/static/images/pop/textRule.png">
+            <div class="content" id="rule">
+                <div></div>
+            </div>
+            <div class="closeBtn mCe" @touchend="close"></div>
+        </div>
+
+        <!--信息弹窗-->
+        <div class="ce alert" v-show="popAlert.show">
+            <div class="content" id="alert">{{popAlert.text}}</div>
+            <div class="closeBtn" @touchend="closeAlert"></div>
+        </div>
+
+        <transition-group name="fade">
+            <div key="fade" class="fadeAlert" v-show="fAlert.show">
+                {{fAlert.text}}
+            </div>
+
+            <section key="fade" class="load" id="load" v-show="ajaxLoading">
+                <div id="loading-center">
+                    <div id="loading-center-absolute">
+                        <div class="object" id="object_one"></div>
+                        <div class="object" id="object_two" style="left:20px;"></div>
+                        <div class="object" id="object_three" style="left:40px;"></div>
+                        <div class="object" id="object_four" style="left:60px;"></div>
+                        <div class="object" id="object_five" style="left:80px;"></div>
+                    </div>
+                </div>
+            </section>
+        </transition-group>
+    </section>
+</section>
+
+<script src="/static/js/lz.min.js"></script>
+<script src="/static/js/common.js"></script>
+<script src="/static/js/index.js"></script>
+
+</body>
+</html>
